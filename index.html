@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Encuesta de satisfacción de clientes · Grupo BOMOHSA · EREA Consulting</title>
+<meta name="description" content="Encuesta de satisfacción de clientes. Toma unos 3 minutos. Respuestas confidenciales.">
+<meta property="og:title" content="Encuesta de satisfacción de clientes">
+<meta property="og:description" content="Su opinión nos ayuda a mejorar. Toma unos 3 minutos.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EREA Consulting">
+<meta property="og:image" content="https://erea-consulting.github.io/satisfaccion-bomohsa/assets/logo-erea.png">
+<link rel="icon" href="assets/logo-erea.png">
+<style>
+:root{--field:#0D5E4B;--acc:#0D8B7D;--ui:#267058;--soft:#E6F2EE;--ink:#1A1A1A;--body:#333333;--mute:#666666;--line:#DBE4DD;--line2:#C4D1C7;--neg:#B4543A;--alert:#F4A833;--bg:#FFFFFF;--card:#FFFFFF}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg)}
+body{font-family:Arial,Helvetica,sans-serif;color:var(--body);font-size:16px;line-height:1.5;min-height:100vh;display:flex;flex-direction:column}
+.hdr{border-bottom:3px solid var(--acc);background:var(--bg);position:sticky;top:0;z-index:20}
+.hdr .row{max-width:760px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:14px}
+.hdr img{height:34px;width:auto}
+.hdr .ttl{flex:1;min-width:0;text-align:right}
+.hdr .ttl b{display:block;color:var(--ink);font-size:14px}
+.hdr .ttl span{font-size:12px;color:var(--mute)}
+.lang{font:bold 13px Arial,Helvetica,sans-serif;border:1px solid var(--line2);background:var(--card);color:var(--ui);border-radius:3px;padding:6px 10px;cursor:pointer;min-height:36px}
+.prog{height:4px;background:var(--line)}
+.prog i{display:block;height:100%;width:0;background:var(--acc);transition:width .25s}
+main{flex:1;width:100%;max-width:760px;margin:0 auto;padding:24px 16px 40px}
+.eyebrow{font-size:11px;letter-spacing:.22em;font-weight:bold;color:var(--acc);text-transform:uppercase;margin-bottom:6px}
+h1{font-size:28px;line-height:1.2;color:var(--ink);margin:0 0 8px;text-transform:uppercase}
+h2{font-size:22px;line-height:1.3;color:var(--ink);margin:0 0 6px}
+h2:after,h1:after{content:"";display:block;width:64px;height:3px;background:var(--acc);margin-top:12px}
+p{margin:10px 0}
+.lead{font-size:17px}
+.box{background:var(--soft);border-left:4px solid var(--acc);padding:14px 18px;border-radius:3px;margin:18px 0;font-size:15px}
+.box.err{border-left-color:var(--neg);background:#F8ECE8;color:var(--ink)}
+.q{margin:26px 0 0;padding-top:18px;border-top:1px solid var(--line)}
+.q:first-of-type{border-top:0;padding-top:0}
+.q>.lbl{display:block;font-weight:bold;color:var(--ink);font-size:16px;margin-bottom:4px}
+.q>.lbl .req{color:var(--neg)}
+.q .help{font-size:13px;color:var(--mute);margin:0 0 10px}
+.q.bad>.lbl{color:var(--neg)}
+.q .hint{font-size:13px;color:var(--neg);margin-top:6px}
+.opts{display:grid;gap:8px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opt{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line2);border-radius:3px;padding:12px 14px;cursor:pointer;background:var(--card);min-height:48px}
+.opt:hover{background:var(--soft)}
+.opt input{width:20px;height:20px;flex:none;margin:1px 0 0;accent-color:var(--acc)}
+.opt.on{border-color:var(--acc);background:var(--soft)}
+.opt .tx b{color:var(--ink)}
+.opt .tx small{display:block;color:var(--mute);font-size:13px;margin-top:2px}
+.flag{font-size:22px;line-height:1}
+input.txt,select,textarea{font:inherit;font-size:16px;padding:11px 12px;border:1px solid var(--line2);border-radius:3px;background:var(--card);color:var(--ink);width:100%}
+textarea{min-height:88px;resize:vertical}
+input.txt:focus,select:focus,textarea:focus{outline:2px solid var(--acc);outline-offset:0;border-color:var(--acc)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sub{margin-top:10px}
+/* matriz 1-5 */
+.mx{border:1px solid var(--line);border-radius:3px}
+.mx .row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 12px;border-top:1px solid var(--line)}
+.mx .row:first-child{border-top:0}
+.mx .row.miss{background:#FDF5E6}
+.mx .it{font-size:15px;color:var(--ink)}
+.sc{display:flex;gap:4px}
+.sc label{display:block;cursor:pointer}
+.sc input{position:absolute;opacity:0;pointer-events:none}
+.sc span{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border:1px solid var(--line2);border-radius:3px;font-weight:bold;font-size:15px;color:var(--ui);background:var(--card)}
+.sc span.na{width:44px;font-size:12px;font-weight:normal;color:var(--mute)}
+.sc input:checked+span{background:var(--acc);border-color:var(--acc);color:#fff}
+.sc input:focus-visible+span{outline:2px solid var(--alert);outline-offset:1px}
+.scale-key{display:flex;justify-content:space-between;font-size:12px;color:var(--mute);margin:0 0 6px}
+/* NPS */
+.nps{display:grid;grid-template-columns:repeat(11,1fr);gap:4px}
+.nps label{cursor:pointer}
+.nps input{position:absolute;opacity:0;pointer-events:none}
+.nps span{display:flex;align-items:center;justify-content:center;height:44px;border:1px solid var(--line2);border-radius:3px;font-weight:bold;color:var(--ui);background:var(--card)}
+.nps input:checked+span{background:var(--acc);border-color:var(--acc);color:#fff}
+.nps input:focus-visible+span{outline:2px solid var(--alert)}
+/* estrellas */
+.stars{display:flex;gap:6px}
+.stars label{cursor:pointer}
+.stars input{position:absolute;opacity:0;pointer-events:none}
+.stars span{font-size:38px;line-height:1;color:var(--line2)}
+.stars span.lit{color:var(--alert)}
+.stars input:focus-visible+span{outline:2px solid var(--acc)}
+.nav{display:flex;gap:12px;justify-content:space-between;align-items:center;margin-top:30px}
+.btn{font:inherit;font-size:16px;font-weight:bold;padding:13px 26px;border-radius:3px;border:1px solid var(--acc);background:var(--acc);color:#fff;cursor:pointer;min-width:140px;min-height:48px}
+.btn:hover{background:var(--field);border-color:var(--field)}
+.btn.sec{background:var(--card);color:var(--ui);border-color:var(--line2)}
+.btn.sec:hover{background:var(--soft)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.check{display:flex;gap:12px;align-items:flex-start;margin:18px 0;font-size:15px;cursor:pointer}
+.check input{width:22px;height:22px;flex:none;margin-top:1px;accent-color:var(--acc)}
+.done{text-align:center;padding:30px 0}
+.done .mark{width:72px;height:72px;border-radius:50%;background:var(--acc);color:#fff;font-size:38px;line-height:72px;margin:0 auto 18px}
+.done h2:after{margin-left:auto;margin-right:auto}
+.folio{display:inline-block;margin-top:10px;padding:8px 16px;border:1px dashed var(--acc);border-radius:3px;font-weight:bold;color:var(--field);letter-spacing:.08em}
+.demo{background:#FDF5E6;border-bottom:1px solid var(--alert);color:var(--ink);font-size:13px;text-align:center;padding:6px 12px}
+footer{border-top:1px solid var(--line);padding:16px;text-align:center;font-size:12px;color:var(--mute)}
+footer b{color:var(--field)}
+[hidden]{display:none!important}
+@media (max-width:600px){
+ h1{font-size:23px}h2{font-size:20px}
+ .grid2,.opts.two{grid-template-columns:1fr}
+ .btn{min-width:0;flex:1;padding:13px 14px}
+ .mx .row{grid-template-columns:1fr}
+ .sc span{width:auto;flex:1}.sc{width:100%}.sc label{flex:1}
+ .nps{grid-template-columns:repeat(6,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="demo" id="demoBar" hidden>Modo demostración: falta configurar el destino de datos. Las respuestas no se guardarán.</div>
+<header class="hdr">
+ <div class="row">
+  <img src="assets/logo-erea.png" alt="EREA Consulting Group">
+  <div class="ttl"><b id="hdrT">Encuesta de satisfacción</b><span id="hdrS">Grupo BOMOHSA</span></div>
+  <button class="lang" id="btnLang" type="button" aria-label="Idioma / Language">EN</button>
+ </div>
+ <div class="prog"><i id="progBar"></i></div>
+</header>
+<main id="app"></main>
+<footer id="foot"></footer>
+
+<script>
+/* ================== CONFIGURACIÓN (editar aquí) ================== */
+var CONFIG = {
+  // URL de la aplicación web de Google Apps Script (termina en /exec). Vacío = modo demostración.
+  endpoint: '',
+  encuesta: 'SATISFACCION',
+  cliente: 'GRUPO BOMOHSA',
+  version: '1.0'
+  // Parámetros por URL:
+  //   ?v=COD        código del vendedor que envía el enlace (WhatsApp). El correo oficial en BCC usa ?v=email
+  //   ?pais=HN|NI|BZ   fija el país;  &marca=BOMOHSA|AGROIN  fija la marca en Honduras
+  //   ?lang=en      fuerza inglés
+};
+/* ================================================================ */
+
+/* ---------- textos ES / EN ---------- */
+var T = {
+ es:{
+  hdr:'Encuesta de satisfacción', grupo:'Grupo BOMOHSA', lang:'EN',
+  demo:'Modo demostración: falta configurar el destino de datos. Las respuestas no se guardarán.',
+  foot:'Encuesta administrada por <b>EREA Consulting</b>. La información es confidencial y solo se usará para mejorar el servicio.',
+  eyebrow0:'Su opinión cuenta', h0:'Encuesta de satisfacción de clientes',
+  lead0:'Queremos conocer su experiencia como cliente para identificar en qué debemos mejorar. Le tomará unos 3 minutos.',
+  conf0:'<b>Confidencialidad.</b> La información que nos comparta es estrictamente confidencial y solo se usará para mejorar el servicio. Las preguntas marcadas con <span style="color:var(--neg)">*</span> son obligatorias.',
+  qPais:'¿En qué país es cliente?', qMarca:'¿De cuál de nuestras empresas es cliente?',
+  start:'Comenzar', next:'Siguiente', back:'Atrás', send:'Enviar respuestas', sending:'Enviando…',
+  req:'Respuesta obligatoria', reqRow:'Califique o marque N/A en las filas resaltadas',
+  step:'Sección {a} de {b}',
+  s1:'Sus datos', s2:'Nuestro desempeño', s3:'Lo más importante para usted', s4:'Recomendación y alternativas', s5:'Productos y canales', s6:'Para terminar',
+  qTipo:'¿Usted compra como persona o para una empresa?', tPer:'Como persona', tEmp:'Para una empresa',
+  qEmp:'Nombre de la empresa', qNom:'Su nombre', qRol:'Su cargo o rol en la empresa', qNomP:'Su nombre completo',
+  hDatos:'Usamos su nombre solo para asociar su opinión con su cuenta de cliente.',
+  qSuc:'¿En qué sucursal o ciudad compra habitualmente?', otraSuc:'Otra', otraSucE:'Escriba la sucursal o ciudad',
+  qCompra:'¿Qué ha comprado o usado con nosotros? (puede marcar varias)',
+  compra:[['equipos','Equipos','bombas, motores, generadores, maquinaria…'],['repuestos','Repuestos e insumos',''],['servicio','Servicio técnico','reparación, instalación, mantenimiento, servicios de pozo'],['proyecto','Un proyecto','diseño y suministro de una solución completa']],
+  qAttr:'Por favor califique los siguientes aspectos (1 es muy malo y 5 es excelente):', na:'N/A',
+  k1:'1 · Muy malo', k5:'5 · Excelente',
+  attr:['Precio','Calidad de producto','Disponibilidad de producto (stock)','Asesoría técnica del vendedor o ingeniero','Trato y atención','Tiempo de respuesta a cotizaciones','Condiciones de crédito y pago','Tiempo de entrega','Comunicación sobre el estado de su pedido','Servicio técnico','Atención de garantías y reclamos','Disponibilidad de repuestos'],
+  qDonde:'Sobre el servicio técnico que recibió: ¿dónde se realizó?', donde:[['taller','En nuestro taller'],['sitio','En su sitio (pozo, planta, instalación)'],['ambos','En ambos']],
+  qTec:'Califique el servicio técnico (1 es muy malo y 5 es excelente):',
+  tec:['Diagnóstico claro antes de reparar (qué tenía y cuánto costaría)','Cumplimiento del tiempo prometido','Costo final igual a lo cotizado','Calidad del trabajo: el equipo quedó funcionando','Comunicación del avance del trabajo','Conocimiento y trato de los técnicos','Seguridad y orden al terminar (equipo de protección, área limpia)'],
+  qRefalla:'¿El equipo volvió a fallar por la misma causa?', refalla:[['si','Sí'],['no','No'],['nose','Aún no sé']],
+  qCsat:'En general, ¿qué tan satisfecho está con el servicio que le brindamos? (1 estrella es muy insatisfecho y 5 es muy satisfecho)',
+  qComA:'¿Algún comentario sobre estos aspectos?',
+  qImp:'De los aspectos que calificó, elija los tres que son más importantes para usted:', imp:['Primero en importancia','Segundo en importancia','Tercero en importancia'], selec:'Seleccione…',
+  qPres:'En sus compras, ¿qué pesa más para usted?', presL:'Ajustarme al presupuesto', presR:'Cumplir la especificación técnica y la calidad',
+  pres:['Mucho más el presupuesto','Más el presupuesto','Ambos por igual','Más la especificación','Mucho más la especificación'],
+  qNps:'¿Qué tan probable es que nos recomiende a un colega o amigo?', npsL:'0 · Nada probable', npsR:'10 · Muy probable',
+  qPorq:'¿Por qué nos dio esa calificación?',
+  qComp:'Si no pudiera comprarnos, ¿a quién le compraría? (puede marcar varias)', compOtro:'Otro', compOtroE:'¿Cuál?',
+  compComun:[['taller','Taller o técnico independiente'],['import','Importación directa o compra en línea'],['nose','No sé']],
+  qShare:'De lo que su empresa (o usted) compra en estos productos y servicios, ¿qué parte nos compra a nosotros?',
+  share:[['100','Todo'],['75','Más del 75 %'],['50','Entre 50 y 75 %'],['25','Entre 25 y 50 %'],['0','Menos del 25 %'],['nose','No sé']],
+  qCat:'¿Cuáles de estos productos y servicios sabía que vendemos? (puede marcar varios)',
+  cat:[['01','Bombeo','bombas de pozo, de superficie, residenciales y presurizadores, motobombas, de drenaje y aguas negras, tratamiento de agua y piscinas'],
+       ['02','Motores y transmisión','motores eléctricos sumergibles y de superficie, motores a gasolina y diésel, reductores y motorreductores'],
+       ['03','Energía y aire comprimido','generadores y plantas eléctricas (gas, diésel, gasolina), compresores y secadores de aire'],
+       ['04','Control y material eléctrico','centros de control de motores, variadores de frecuencia, arrancadores, tableros, cables y material eléctrico'],
+       ['05','Tubería, válvulas y conexiones','tubería PVC y metálica, válvulas, conexiones, vapor y condensado, protección contra incendio, medidores de agua'],
+       ['06','Almacenamiento y calentamiento de agua','tanques de presión, calentadores, tinacos y cisternas'],
+       ['09','Maquinaria agroindustrial','desintegradoras, picadoras, molinos, desgranadoras, equipo de café, fumigadoras, desbrozadoras, concreteras'],
+       ['10','Repuestos e insumos','kits de reparación, impulsores, sellos, filtros, rodamientos, repuestos eléctricos y de motor'],
+       ['11','Servicios','limpieza y aforo de pozos, inspección con cámara, reparación, instalación, mantenimiento, puesta en marcha y alquiler de equipos']],
+  qFalta:'¿Qué productos o servicios le gustaría que ofreciéramos?',
+  qFacil:'¿Le es fácil comunicarse con su vendedor?', si:'Sí', no:'No', qFacilP:'¿Por qué?',
+  qCanal:'¿Por qué medio prefiere cotizar y comprar? (puede marcar varios)',
+  canal:[['whatsapp','WhatsApp con el vendedor'],['visita','Visita del vendedor'],['sucursal','En la sucursal'],['telefono','Por teléfono'],['correo','Por correo electrónico'],['web','Página web o redes sociales']],
+  qContacto:'¿Le gustaría que un asesor lo contacte?', qTel:'Teléfono', qMail:'Correo electrónico', qTelH:'Déjenos al menos un teléfono o un correo.',
+  qFinal:'Finalmente, ¿tiene algún comentario o recomendación adicional?',
+  endE:'Encuesta completada', endH:'¡Gracias por su tiempo!', endP:'Sus respuestas fueron registradas correctamente. Ya puede cerrar esta página.',
+  endDemo:'Modo demostración: la encuesta funcionó, pero las respuestas no se guardaron porque falta configurar el destino de datos.',
+  endOff:'<b>No hubo conexión estable para enviar.</b> Sus respuestas quedaron guardadas en este dispositivo y se enviarán automáticamente cuando vuelva la conexión. Vuelva a abrir este mismo enlace más tarde desde este dispositivo.',
+  folio:'Código de confirmación: ', pend:'<b>Hay una encuesta pendiente de envío en este dispositivo.</b> Se está intentando enviar automáticamente.'
+ },
+ en:{
+  hdr:'Customer satisfaction survey', grupo:'Grupo BOMOHSA', lang:'ES',
+  demo:'Demo mode: the data destination is not configured yet. Answers will not be saved.',
+  foot:'Survey administered by <b>EREA Consulting</b>. Your information is confidential and will only be used to improve our service.',
+  eyebrow0:'Your opinion matters', h0:'Customer satisfaction survey',
+  lead0:'We want to learn about your experience as our customer so we can see where we need to improve. It takes about 3 minutes.',
+  conf0:'<b>Confidentiality.</b> The information you share is strictly confidential and will only be used to improve our service. Questions marked <span style="color:var(--neg)">*</span> are required.',
+  qPais:'In which country are you our customer?', qMarca:'Which of our companies do you buy from?',
+  start:'Start', next:'Next', back:'Back', send:'Submit answers', sending:'Sending…',
+  req:'Required', reqRow:'Rate or mark N/A in the highlighted rows',
+  step:'Section {a} of {b}',
+  s1:'About you', s2:'Our performance', s3:'What matters most to you', s4:'Recommendation and alternatives', s5:'Products and channels', s6:'To finish',
+  qTipo:'Do you buy as an individual or for a company?', tPer:'As an individual', tEmp:'For a company',
+  qEmp:'Company name', qNom:'Your name', qRol:'Your position or role in the company', qNomP:'Your full name',
+  hDatos:'We only use your name to link your feedback to your customer account.',
+  qSuc:'Which branch or town do you usually buy from?', otraSuc:'Other', otraSucE:'Type the branch or town',
+  qCompra:'What have you bought or used from us? (check all that apply)',
+  compra:[['equipos','Equipment','pumps, motors, generators, machinery…'],['repuestos','Spare parts and supplies',''],['servicio','Technical service','repair, installation, maintenance, well services'],['proyecto','A project','design and supply of a complete solution']],
+  qAttr:'Please rate the following (1 is very poor and 5 is excellent):', na:'N/A',
+  k1:'1 · Very poor', k5:'5 · Excellent',
+  attr:['Price','Product quality','Product availability (stock)','Technical advice from the salesperson or engineer','Courtesy and service','Quote response time','Credit and payment terms','Delivery time','Updates on the status of your order','Technical service','Handling of warranties and claims','Spare parts availability'],
+  qDonde:'About the technical service you received: where was it done?', donde:[['taller','At our workshop'],['sitio','At your site (well, plant, installation)'],['ambos','Both']],
+  qTec:'Please rate the technical service (1 is very poor and 5 is excellent):',
+  tec:['Clear diagnosis before repairing (what was wrong and what it would cost)','Meeting the promised time','Final cost equal to the quote','Quality of the work: the equipment works','Updates on the progress of the work','Knowledge and courtesy of the technicians','Safety and tidiness when finished (protective equipment, clean area)'],
+  qRefalla:'Did the equipment fail again for the same reason?', refalla:[['si','Yes'],['no','No'],['nose','Not sure yet']],
+  qCsat:'Overall, how satisfied are you with our service? (1 star is very dissatisfied and 5 is very satisfied)',
+  qComA:'Any comments on these aspects?',
+  qImp:'Of the aspects you rated, choose the three that matter most to you:', imp:['Most important','Second most important','Third most important'], selec:'Select…',
+  qPres:'When you buy, what matters more to you?', presL:'Staying within budget', presR:'Meeting the technical specification and quality',
+  pres:['Budget, by far','Budget, somewhat more','Both equally','Specification, somewhat more','Specification, by far'],
+  qNps:'How likely are you to recommend us to a colleague or friend?', npsL:'0 · Not at all likely', npsR:'10 · Extremely likely',
+  qPorq:'Why did you give us that score?',
+  qComp:'If you could not buy from us, who would you buy from? (check all that apply)', compOtro:'Other', compOtroE:'Which one?',
+  compComun:[['taller','Independent workshop or technician'],['import','Direct import or online purchase'],['nose','Not sure']],
+  qShare:'Of what your company (or you) buys in these products and services, what share do you buy from us?',
+  share:[['100','All of it'],['75','More than 75 %'],['50','50 to 75 %'],['25','25 to 50 %'],['0','Less than 25 %'],['nose','Not sure']],
+  qCat:'Which of these products and services did you know we sell? (check all that apply)',
+  cat:[['01','Pumping','well pumps, surface pumps, residential pumps and pressure boosters, engine-driven pumps, drainage and sewage pumps, water treatment and pools'],
+       ['02','Motors and power transmission','submersible and surface electric motors, gasoline and diesel engines, gear reducers and gear motors'],
+       ['03','Power and compressed air','generators (gas, diesel, gasoline), air compressors and dryers'],
+       ['04','Controls and electrical supplies','motor control centers, variable frequency drives, starters, panels, cables and electrical supplies'],
+       ['05','Pipes, valves and fittings','PVC and metal pipe, valves, fittings, steam and condensate, fire protection, water meters'],
+       ['06','Water storage and heating','pressure tanks, water heaters, water tanks and cisterns'],
+       ['09','Agro-industrial machinery','grinders, choppers, mills, shellers, coffee equipment, sprayers, brush cutters, concrete mixers'],
+       ['10','Spare parts and supplies','repair kits, impellers, seals, filters, bearings, electrical and engine parts'],
+       ['11','Services','well cleaning and testing, camera inspection, repair, installation, maintenance, commissioning and equipment rental']],
+  qFalta:'What products or services would you like us to offer?',
+  qFacil:'Is it easy to reach your salesperson?', si:'Yes', no:'No', qFacilP:'Why?',
+  qCanal:'How do you prefer to get quotes and buy? (check all that apply)',
+  canal:[['whatsapp','WhatsApp with the salesperson'],['visita','Visit from the salesperson'],['sucursal','At the branch'],['telefono','By phone'],['correo','By email'],['web','Website or social media']],
+  qContacto:'Would you like a sales advisor to contact you?', qTel:'Phone', qMail:'Email', qTelH:'Please leave at least a phone number or an email.',
+  qFinal:'Finally, do you have any other comment or suggestion?',
+  endE:'Survey completed', endH:'Thank you for your time!', endP:'Your answers were recorded. You can close this page now.',
+  endDemo:'Demo mode: the survey worked, but answers were not saved because the data destination is not configured.',
+  endOff:'<b>There was no stable connection to submit.</b> Your answers are saved on this device and will be sent automatically when the connection is back. Please open this same link again later on this device.',
+  folio:'Confirmation code: ', pend:'<b>There is a pending survey on this device.</b> We are trying to send it automatically.'
+ }
+};
+
+/* ---------- países, marcas, sucursales y competidores ---------- */
+// Competidores: borrador 17-oct-2026. Honduras: maestros de competidores ZN y Top 3 por categoría ZCS del cliente,
+// y análisis competitivo EREA (16-oct). Nicaragua y Belice: investigación web, por validar con BOMONSA y PMBL.
+var PAISES = {
+ HN:{flag:'🇭🇳', es:'Honduras', en:'Honduras', lang:'es',
+     marcas:[{id:'BOMOHSA', n:'BOMOHSA', d:{es:'Bombas y Motores de Honduras', en:'Bombas y Motores de Honduras'}},
+             {id:'AGROIN', n:'AGROIN', d:{es:'Maquinaria y equipo agroindustrial', en:'Agro-industrial machinery and equipment'}}],
+     suc:['San Pedro Sula · Principal','San Pedro Sula · Circunvalación','Tegucigalpa','La Ceiba','Tocoa','Roatán','Santa Rosa de Copán','La Esperanza']},
+ NI:{flag:'🇳🇮', es:'Nicaragua', en:'Nicaragua', lang:'es',
+     marcas:[{id:'BOMONSA', n:'BOMONSA', d:{es:'Bombas y Motores de Nicaragua', en:'Bombas y Motores de Nicaragua'}}],
+     suc:['Managua']},
+ BZ:{flag:'🇧🇿', es:'Belice', en:'Belize', lang:'en',
+     marcas:[{id:'PMBL', n:'Pumps & Motors of Belize', d:{es:'Pumps & Motors of Belize', en:'Pumps & Motors of Belize'}}],
+     suc:['Belize City']}
+};
+var COMPETIDORES = {
+ BOMOHSA:['Equipos Industriales (Equinsa)','AGRINSA','Larach & Cía','La Mundial','Aquatec','Inversiones Diversas','CAMOSA','Distribuidora Cummins','Suministros Eléctricos (SEL)','FEFASA','Do it Center','FUNO','Durman','Kaeser / Compresores de Honduras'],
+ AGROIN:['AGRINSA','FUNO','Cemcol','Seagro','Larach & Cía','La Mundial','Fanasa','Distribuidor Stihl o Husqvarna','Penagos o JM Estrada (equipo de café)','Fabricante nacional (molinos, picadoras)','Durman'],
+ BOMONSA:['Corporación Font','URP Sistemas de Bombeo','La Casa del Tanque','Cadena de ferretería (SINSA u otra)'],
+ PMBL:['FT Williams & Associates',"Benny's Homecenter",'Local hardware store','Purchase in Mexico (Chetumal)']
+};
+
+(function(){
+  var QS = new URLSearchParams(location.search);
+  var DEMO = !/^https?:\/\//.test(CONFIG.endpoint);
+  var STORE_KEY = 'erea_satis_bomohsa_v1';
+  var QUEUE_KEY = 'erea_satis_bomohsa_cola';
+  var app = document.getElementById('app');
+  var st = load() || {r:{}, step:0, id:uid(), inicio:null, lang:null};
+  st.r = st.r || {};
+  if (QS.get('v')) st.vendedor = QS.get('v').trim().slice(0, 40);
+  if (QS.get('pais') && PAISES[QS.get('pais').toUpperCase()]) st.r.pais = QS.get('pais').toUpperCase();
+  if (QS.get('marca')) st.r.marca = QS.get('marca').toUpperCase();
+  if (QS.get('lang') === 'en' || QS.get('lang') === 'es') st.lang = QS.get('lang');
+  if (!st.lang) st.lang = st.r.pais ? PAISES[st.r.pais].lang : 'es';
+  if (!st.ordenComp) st.ordenComp = {};
+
+  function $(id){ return document.getElementById(id); }
+  function uid(){ return 'S' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+  function save(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(st)); }catch(e){} }
+  function load(){ try{ var s = localStorage.getItem(STORE_KEY); return s ? JSON.parse(s) : null; }catch(e){ return null; } }
+  function clearSave(){ try{ localStorage.removeItem(STORE_KEY); }catch(e){} }
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function t(k){ return T[st.lang][k]; }
+  var R = st.r;
+
+  /* ---------- IP y zona horaria (auditoría, igual que DISC/MOSS/IPV) ---------- */
+  function obtenerIP(){
+    if (st.ip) return Promise.resolve(st.ip);
+    var urls = ['https://api.ipify.org?format=json', 'https://api64.ipify.org?format=json'];
+    function intento(k){
+      if (k >= urls.length) return Promise.resolve('');
+      var ctl = window.AbortController ? new AbortController() : null;
+      var tm = setTimeout(function(){ if (ctl) ctl.abort(); }, 4000);
+      return fetch(urls[k], ctl ? {signal: ctl.signal} : {}).then(function(r){ return r.json(); })
+        .then(function(j){ clearTimeout(tm); st.ip = j.ip || ''; save(); return st.ip; })
+        .catch(function(){ clearTimeout(tm); return intento(k + 1); });
+    }
+    return intento(0);
+  }
+  obtenerIP();
+  var ZONA = ''; try { ZONA = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch(e) {}
+
+  /* ---------- helpers de marca ---------- */
+  function pais(){ return PAISES[R.pais] || null; }
+  function marcaObj(){ var p = pais(); if (!p) return null; var m = p.marcas.filter(function(x){ return x.id === R.marca; })[0]; return m || (p.marcas.length === 1 ? p.marcas[0] : null); }
+  function marcaN(){ var m = marcaObj(); return m ? m.n : t('grupo'); }
+  function usaServicio(){ return (R.compra || []).indexOf('servicio') >= 0; }
+  function enSitio(){ return R.donde === 'sitio' || R.donde === 'ambos'; }
+
+  /* ---------- constructores de preguntas ---------- */
+  function q(id, label, body, opt){
+    opt = opt || {};
+    return '<div class="q" data-q="' + id + '"' + (opt.hidden ? ' hidden' : '') + '><span class="lbl">' + label + (opt.req ? ' <span class="req">*</span>' : '') + '</span>' +
+      (opt.help ? '<p class="help">' + opt.help + '</p>' : '') + body + '<div class="hint"></div></div>';
+  }
+  function radios(name, items, val, two){
+    return '<div class="opts' + (two ? ' two' : '') + '">' + items.map(function(it){
+      var on = val === it[0];
+      return '<label class="opt' + (on ? ' on' : '') + '"><input type="radio" name="' + name + '" value="' + esc(it[0]) + '"' + (on ? ' checked' : '') + '><span class="tx">' + it[1] + (it[2] ? '<small>' + esc(it[2]) + '</small>' : '') + '</span></label>';
+    }).join('') + '</div>';
+  }
+  function checks(name, items, vals){
+    vals = vals || [];
+    return '<div class="opts">' + items.map(function(it){
+      var on = vals.indexOf(it[0]) >= 0;
+      return '<label class="opt' + (on ? ' on' : '') + '"><input type="checkbox" name="' + name + '" value="' + esc(it[0]) + '"' + (on ? ' checked' : '') + '><span class="tx"><b>' + esc(it[1]) + '</b>' + (it[2] ? '<small>' + esc(it[2]) + '</small>' : '') + '</span></label>';
+    }).join('') + '</div>';
+  }
+  function matrix(name, items, vals){
+    vals = vals || [];
+    return '<div class="scale-key"><span>' + t('k1') + '</span><span>' + t('k5') + '</span></div><div class="mx">' + items.map(function(it, i){
+      var v = vals[i] == null ? '' : String(vals[i]);
+      var sc = [1,2,3,4,5,'NA'].map(function(n){
+        var on = v === String(n);
+        return '<label><input type="radio" name="' + name + '_' + i + '" value="' + n + '"' + (on ? ' checked' : '') + ' aria-label="' + esc(it) + ': ' + (n === 'NA' ? t('na') : n) + '"><span' + (n === 'NA' ? ' class="na"' : '') + '>' + (n === 'NA' ? t('na') : n) + '</span></label>';
+      }).join('');
+      return '<div class="row" data-row="' + i + '"><div class="it">' + esc(it) + '</div><div class="sc">' + sc + '</div></div>';
+    }).join('') + '</div>';
+  }
+  function text(name, val, ph){ return '<input class="txt" name="' + name + '" value="' + esc(val || '') + '"' + (ph ? ' placeholder="' + esc(ph) + '"' : '') + ' maxlength="200">'; }
+  function area(name, val){ return '<textarea name="' + name + '" maxlength="3000">' + esc(val || '') + '</textarea>'; }
+
+  /* ---------- pasos ---------- */
+  var PASOS = ['portada', 'datos', 'desempeno', 'importancia', 'lealtad', 'portafolio', 'cierre', 'fin'];
+  var NSEC = 6;
+
+  function render(){
+    var L = st.lang, P = PASOS[st.step];
+    document.documentElement.lang = L;
+    $('btnLang').textContent = t('lang');
+    $('hdrT').textContent = t('hdr');
+    $('hdrS').textContent = marcaN();
+    $('foot').innerHTML = t('foot');
+    $('demoBar').textContent = t('demo'); $('demoBar').hidden = !DEMO;
+    $('progBar').style.width = Math.round(100 * st.step / (PASOS.length - 1)) + '%';
+    var h = '';
+    var sec = function(n, k){ return '<div class="eyebrow">' + t('step').replace('{a}', n).replace('{b}', NSEC) + '</div><h2>' + t(k) + '</h2>'; };
+    if (P === 'portada'){
+      var p = pais();
+      h = '<div class="eyebrow">' + t('eyebrow0') + '</div><h1>' + t('h0') + '</h1><p class="lead">' + t('lead0') + '</p><div class="box">' + t('conf0') + '</div>' +
+        q('pais', t('qPais'), radios('pais', Object.keys(PAISES).map(function(k){ return [k, '<span class="flag">' + PAISES[k].flag + '</span> <b>' + PAISES[k][L] + '</b>']; }), R.pais), {req:true}) +
+        q('marca', t('qMarca'), p && p.marcas.length > 1 ? radios('marca', p.marcas.map(function(m){ return [m.id, '<b>' + esc(m.n) + '</b>', m.d[L]]; }), R.marca) : '', {req:true, hidden: !(p && p.marcas.length > 1)}) +
+        '<div class="box err" id="pendingBox" hidden></div>' +
+        '<div class="nav"><span></span><button class="btn" id="btnNext">' + t('start') + '</button></div>';
+    } else if (P === 'datos'){
+      var suc = (pais().suc || []).map(function(s){ return [s, esc(s)]; }).concat([['__otra', t('otraSuc')]]);
+      h = sec(1, 's1') +
+        q('tipo', t('qTipo'), radios('tipo', [['empresa', '<b>' + t('tEmp') + '</b>'], ['persona', '<b>' + t('tPer') + '</b>']], R.tipo, true), {req:true}) +
+        q('empresa', t('qEmp'), text('empresa', R.empresa), {req:true, hidden: R.tipo !== 'empresa'}) +
+        q('nombre', R.tipo === 'empresa' ? t('qNom') : t('qNomP'), text('nombre', R.nombre), {req:true, hidden: !R.tipo, help: t('hDatos')}) +
+        q('rol', t('qRol'), text('rol', R.rol), {hidden: R.tipo !== 'empresa'}) +
+        q('sucursal', t('qSuc'), '<select name="sucursal"><option value="">' + t('selec') + '</option>' + suc.map(function(x){ return '<option value="' + esc(x[0]) + '"' + (R.sucursal === x[0] ? ' selected' : '') + '>' + x[1] + '</option>'; }).join('') + '</select>' + '<div class="sub"' + (R.sucursal === '__otra' ? '' : ' hidden') + ' id="sucOtraBox">' + text('sucursal_otra', R.sucursal_otra, t('otraSucE')) + '</div>', {hidden: !!st.vendedor && st.vendedor !== 'email'}) +
+        q('compra', t('qCompra'), checks('compra', t('compra'), R.compra), {req:true}) +
+        nav();
+    } else if (P === 'desempeno'){
+      var tec = t('tec').slice(0, enSitio() ? 7 : 6);
+      h = sec(2, 's2') +
+        q('attr', t('qAttr'), matrix('attr', t('attr'), R.attr)) +
+        q('donde', t('qDonde'), radios('donde', t('donde'), R.donde), {hidden: !usaServicio()}) +
+        q('tec', t('qTec'), matrix('tec', tec, R.tec), {hidden: !usaServicio() || !R.donde}) +
+        q('refalla', t('qRefalla'), radios('refalla', t('refalla'), R.refalla, false), {hidden: !usaServicio() || !R.donde}) +
+        q('csat', t('qCsat'), stars(R.csat), {req:true}) +
+        q('com_attr', t('qComA'), area('com_attr', R.com_attr)) + nav();
+    } else if (P === 'importancia'){
+      h = sec(3, 's3') +
+        q('imp', t('qImp'), [0,1,2].map(function(i){
+          var sel = (R.imp || [])[i] || '';
+          return '<div class="sub"><label style="font-size:13px;color:var(--mute)">' + t('imp')[i] + '</label><select name="imp_' + i + '"><option value="">' + t('selec') + '</option>' +
+            t('attr').map(function(a, k){ return '<option value="' + k + '"' + (String(sel) === String(k) ? ' selected' : '') + '>' + esc(a) + '</option>'; }).join('') + '</select></div>';
+        }).join('')) +
+        q('pres', t('qPres'), '<div class="scale-key"><span>' + t('presL') + '</span><span>' + t('presR') + '</span></div>' + radios('pres', t('pres').map(function(x, i){ return [String(i + 1), (i + 1) + ' · ' + esc(x)]; }), R.pres)) + nav();
+    } else if (P === 'lealtad'){
+      var mk = marcaObj() ? marcaObj().id : 'BOMOHSA';
+      var lista = COMPETIDORES[mk] || [];
+      if (!st.ordenComp[mk]){ st.ordenComp[mk] = lista.map(function(_, i){ return i; }).sort(function(){ return Math.random() - .5; }); save(); }
+      var items = st.ordenComp[mk].map(function(i){ return [lista[i], lista[i]]; }).concat(t('compComun')).concat([['__otro', t('compOtro')]]);
+      h = sec(4, 's4') +
+        q('nps', t('qNps'), nps(R.nps), {req:true}) +
+        q('nps_porque', t('qPorq'), area('nps_porque', R.nps_porque)) +
+        q('comp', t('qComp'), checks('comp', items, R.comp) + '<div class="sub"' + ((R.comp || []).indexOf('__otro') >= 0 ? '' : ' hidden') + ' id="compOtroBox">' + text('comp_otro', R.comp_otro, t('compOtroE')) + '</div>') +
+        q('share', t('qShare'), radios('share', t('share'), R.share, true)) + nav();
+    } else if (P === 'portafolio'){
+      h = sec(5, 's5') +
+        q('cat', t('qCat'), checks('cat', t('cat'), R.cat)) +
+        q('falta', t('qFalta'), area('falta', R.falta)) +
+        q('facil', t('qFacil'), radios('facil', [['si', t('si')], ['no', t('no')]], R.facil, true) + '<div class="sub"><label style="font-size:13px;color:var(--mute)">' + t('qFacilP') + '</label>' + area('facil_porque', R.facil_porque) + '</div>') +
+        q('canal', t('qCanal'), checks('canal', t('canal'), R.canal)) + nav();
+    } else if (P === 'cierre'){
+      h = sec(6, 's6') +
+        q('contacto', t('qContacto'), radios('contacto', [['si', t('si')], ['no', t('no')]], R.contacto, true) +
+          '<div class="sub grid2" id="contBox"' + (R.contacto === 'si' ? '' : ' hidden') + '><div><label style="font-size:13px;color:var(--mute)">' + t('qTel') + '</label>' + text('telefono', R.telefono) + '</div><div><label style="font-size:13px;color:var(--mute)">' + t('qMail') + '</label>' + text('correo', R.correo) + '</div></div>') +
+        q('final', t('qFinal'), area('final', R.final)) +
+        '<div class="nav"><button class="btn sec" id="btnPrev">' + t('back') + '</button><button class="btn" id="btnNext">' + t('send') + '</button></div>';
+    } else if (P === 'fin'){
+      h = '<div class="done"><div class="mark">&#10003;</div><div class="eyebrow">' + t('endE') + '</div><h2>' + t('endH') + '</h2><p id="finMsg">' + (st.finMsg ? t(st.finMsg) : t('endP')) + '</p>' +
+        (st.folio ? '<div class="folio">' + t('folio') + esc(st.folio) + '</div>' : '') + '</div>';
+    }
+    app.innerHTML = h;
+    bind();
+    if (P === 'portada' && queue().length){ $('pendingBox').innerHTML = t('pend'); $('pendingBox').hidden = false; flushQueue(); }
+  }
+  function nav(){ return '<div class="nav"><button class="btn sec" id="btnPrev">' + t('back') + '</button><button class="btn" id="btnNext">' + t('next') + '</button></div>'; }
+  function stars(v){
+    return '<div class="stars" role="radiogroup">' + [1,2,3,4,5].map(function(n){
+      return '<label><input type="radio" name="csat" value="' + n + '"' + (String(v) === String(n) ? ' checked' : '') + ' aria-label="' + n + '"><span class="' + (v >= n ? 'lit' : '') + '">★</span></label>';
+    }).join('') + '</div>';
+  }
+  function nps(v){
+    return '<div class="scale-key"><span>' + t('npsL') + '</span><span>' + t('npsR') + '</span></div><div class="nps" role="radiogroup">' + [0,1,2,3,4,5,6,7,8,9,10].map(function(n){
+      return '<label><input type="radio" name="nps" value="' + n + '"' + (String(v) === String(n) ? ' checked' : '') + ' aria-label="' + n + '"><span>' + n + '</span></label>';
+    }).join('') + '</div>';
+  }
+
+  /* ---------- captura de respuestas ---------- */
+  app.addEventListener('change', onChange);
+  app.addEventListener('input', onInput);
+  function bind(){
+    var bn = $('btnNext'), bp = $('btnPrev');
+    if (bn) bn.onclick = siguiente;
+    if (bp) bp.onclick = function(){ st.step--; save(); render(); window.scrollTo(0, 0); };
+  }
+  function onInput(e){
+    var n = e.target.name; if (!n || e.target.type === 'radio' || e.target.type === 'checkbox' || e.target.tagName === 'SELECT') return;
+    R[n] = e.target.value; save(); limpiar(e.target);
+  }
+  function onChange(e){
+    var el = e.target, n = el.name; if (!n) return;
+    var m;
+    if ((m = n.match(/^(attr|tec)_(\d+)$/))){ R[m[1]] = R[m[1]] || []; R[m[1]][+m[2]] = el.value; var row = el.closest('.row'); if (row) row.classList.remove('miss'); }
+    else if ((m = n.match(/^imp_(\d)$/))){ R.imp = R.imp || []; R.imp[+m[1]] = el.value; }
+    else if (el.type === 'checkbox'){
+      R[n] = [].slice.call(app.querySelectorAll('input[name="' + n + '"]:checked')).map(function(x){ return x.value; });
+      el.closest('.opt').classList.toggle('on', el.checked);
+    } else if (el.type === 'radio'){
+      R[n] = el.value;
+      app.querySelectorAll('input[name="' + n + '"]').forEach(function(x){ var o = x.closest('.opt'); if (o) o.classList.toggle('on', x.checked); });
+    } else R[n] = el.value;
+    save(); limpiar(el);
+    // dependencias que redibujan la pantalla
+    if (n === 'pais'){ if (PAISES[R.pais].marcas.length === 1) R.marca = PAISES[R.pais].marcas[0].id; else if (!PAISES[R.pais].marcas.some(function(x){ return x.id === R.marca; })) R.marca = ''; st.lang = PAISES[R.pais].lang; save(); render(); }
+    if (n === 'marca') $('hdrS').textContent = marcaN();
+    if (n === 'tipo' || n === 'donde') { render(); }
+    if (n === 'compra' && PASOS[st.step] === 'datos') { /* sin efecto visible en esta pantalla */ }
+    if (n === 'csat') app.querySelectorAll('.stars span').forEach(function(s, i){ s.classList.toggle('lit', i < +R.csat); });
+    if (n === 'sucursal') $('sucOtraBox').hidden = R.sucursal !== '__otra';
+    if (n === 'comp') $('compOtroBox').hidden = (R.comp || []).indexOf('__otro') < 0;
+    if (n === 'contacto') $('contBox').hidden = R.contacto !== 'si';
+  }
+  function limpiar(el){ var b = el.closest('.q'); if (b){ b.classList.remove('bad'); b.querySelector('.hint').textContent = ''; } }
+  function marcar(id, msg){ var b = app.querySelector('[data-q="' + id + '"]'); if (!b) return null; b.classList.add('bad'); b.querySelector('.hint').textContent = msg || t('req'); return b; }
+
+  /* ---------- validación por paso ---------- */
+  function validar(){
+    var P = PASOS[st.step], bad = [];
+    function falta(id, cond, msg){ if (cond){ var b = marcar(id, msg); if (b) bad.push(b); } }
+    if (P === 'portada'){ falta('pais', !R.pais); var p = pais(); falta('marca', p && p.marcas.length > 1 && !R.marca); }
+    if (P === 'datos'){
+      falta('tipo', !R.tipo);
+      falta('empresa', R.tipo === 'empresa' && !(R.empresa || '').trim());
+      falta('nombre', R.tipo && !(R.nombre || '').trim());
+      falta('compra', !(R.compra || []).length);
+    }
+    if (P === 'desempeno'){
+      falta('csat', !R.csat);
+      // la matriz no es obligatoria fila por fila, pero se resaltan las vacías si quedó a medias
+      ['attr', 'tec'].forEach(function(k){
+        var box = app.querySelector('[data-q="' + k + '"]'); if (!box || box.hidden) return;
+        var rows = box.querySelectorAll('.row'), n = 0;
+        rows.forEach(function(r, i){ if ((R[k] || [])[i]) n++; });
+        if (n > 0 && n < rows.length){ rows.forEach(function(r, i){ r.classList.toggle('miss', !(R[k] || [])[i]); }); var b = marcar(k, t('reqRow')); if (b) bad.push(b); }
+      });
+    }
+    if (P === 'lealtad') falta('nps', R.nps == null || R.nps === '');
+    if (P === 'cierre') falta('contacto', R.contacto === 'si' && !(R.telefono || '').trim() && !(R.correo || '').trim(), t('qTelH'));
+    if (bad.length){ bad[0].scrollIntoView({block: 'center', behavior: 'smooth'}); return false; }
+    return true;
+  }
+  function siguiente(){
+    if (!validar()) return;
+    if (st.step === 0 && !st.inicio) st.inicio = new Date().toISOString();
+    if (PASOS[st.step] === 'cierre') return enviarFinal();
+    st.step++; save(); render(); window.scrollTo(0, 0);
+  }
+
+  /* ---------- envío ---------- */
+  function limpio(){
+    // quita respuestas de ramas que quedaron ocultas
+    var r = JSON.parse(JSON.stringify(R));
+    if (r.tipo !== 'empresa'){ delete r.empresa; delete r.rol; }
+    if ((r.compra || []).indexOf('servicio') < 0){ delete r.donde; delete r.tec; delete r.refalla; }
+    else if (r.donde === 'taller' && r.tec) r.tec = r.tec.slice(0, 6);
+    if (r.sucursal !== '__otra') delete r.sucursal_otra;
+    if ((r.comp || []).indexOf('__otro') < 0) delete r.comp_otro;
+    if (r.contacto !== 'si'){ delete r.telefono; delete r.correo; }
+    return r;
+  }
+  function payload(){
+    var fin = new Date(), m = marcaObj();
+    return {
+      submissionId: st.id, encuesta: CONFIG.encuesta, cliente: CONFIG.cliente, version: CONFIG.version,
+      pais: R.pais, marca: m ? m.id : '', idioma: st.lang,
+      vendedor: st.vendedor || '', canalEnvio: !st.vendedor ? 'directo' : (st.vendedor === 'email' ? 'correo' : 'vendedor'),
+      respuestas: limpio(),
+      etiquetas: {attr: T.es.attr, tec: T.es.tec.slice(0, (R.donde === 'taller' ? 6 : 7))},
+      ordenCompetidores: m ? (st.ordenComp[m.id] || []).map(function(i){ return (COMPETIDORES[m.id] || [])[i]; }) : [],
+      inicio: st.inicio, fin: fin.toISOString(),
+      duracionSeg: st.inicio ? Math.round((fin - new Date(st.inicio)) / 1000) : null,
+      ip: st.ip || '', zona: ZONA, origen: location.href.split('#')[0], ua: navigator.userAgent.slice(0, 180)
+    };
+  }
+  function post(p){
+    if (DEMO){ window.__ultimoPayload = p; return new Promise(function(res){ setTimeout(function(){ res({ok:true, folio:'DEMO-' + p.submissionId.slice(-5).toUpperCase(), demo:true}); }, 400); }); }
+    return fetch(CONFIG.endpoint, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(p), redirect:'follow'})
+      .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function(j){ if (!j.ok) throw new Error(j.error || 'Error del servidor'); return j; });
+  }
+  function sendWithRetry(p, tries){
+    return post(p).catch(function(err){
+      if (tries <= 1) throw err;
+      return new Promise(function(res){ setTimeout(res, (6 - tries) * 1500 + Math.random() * 1000); }).then(function(){ return sendWithRetry(p, tries - 1); });
+    });
+  }
+  function queue(){ try{ return JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]'); }catch(e){ return []; } }
+  function setQueue(qq){ try{ localStorage.setItem(QUEUE_KEY, JSON.stringify(qq)); }catch(e){} }
+  function flushQueue(){
+    var qq = queue(); if (!qq.length) return;
+    var p = qq[0];
+    sendWithRetry(p, 3).then(function(){
+      setQueue(queue().filter(function(x){ return x.submissionId !== p.submissionId; }));
+      var pb = $('pendingBox'); if (pb) pb.hidden = true; flushQueue();
+    }).catch(function(){});
+  }
+  function enviarFinal(){
+    var btn = $('btnNext'); if (btn.disabled) return;
+    btn.disabled = true; btn.textContent = t('sending'); $('btnPrev').disabled = true;
+    obtenerIP().then(function(){
+      var p = payload();
+      sendWithRetry(p, 5).then(function(j){
+        terminar(j.folio || '', j.demo ? 'endDemo' : '');
+      }).catch(function(){
+        var qq = queue().filter(function(x){ return x.submissionId !== p.submissionId; }); qq.push(p); setQueue(qq);
+        terminar('', 'endOff');
+      });
+    });
+  }
+  function terminar(folio, msg){
+    clearSave();
+    var lang = st.lang;
+    st = {r:{}, step: PASOS.length - 1, id: uid(), inicio: null, lang: lang, folio: folio, finMsg: msg, ordenComp: {}};
+    R = st.r;
+    render(); window.scrollTo(0, 0);
+  }
+  window.addEventListener('online', flushQueue);
+
+  $('btnLang').onclick = function(){ st.lang = st.lang === 'es' ? 'en' : 'es'; save(); render(); };
+  if (st.step >= PASOS.length - 1) st.step = 0;
+  if (st.step > 0 && !pais()) st.step = 0;
+  render();
+})();
+</script>
+</body>
+</html>
