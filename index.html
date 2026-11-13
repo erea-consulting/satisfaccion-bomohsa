@@ -172,7 +172,7 @@ var T = {
   qRefalla:'¿El equipo volvió a fallar por la misma causa?', refalla:[['si','Sí'],['no','No'],['nose','Aún no sé']],
   qCsat:'En general, ¿qué tan satisfecho está con el servicio que le brindamos? (1 estrella es muy insatisfecho y 5 es muy satisfecho)',
   qComA:'¿Algún comentario sobre estos aspectos?',
-  qImp:'De los aspectos que calificó, elija los tres que son más importantes para usted:', imp:['Primero en importancia','Segundo en importancia','Tercero en importancia'], selec:'Seleccione…',
+  qImp:'De los aspectos que calificó, elija los tres que son más importantes para usted:', hImp:'Toque 3 en orden de importancia: el primero que toque será el n.º 1. Para cambiar el orden, toque uno elegido y se quita.', imp:['Primero en importancia','Segundo en importancia','Tercero en importancia'], selec:'Seleccione…',
   qPres:'En sus compras, ¿qué pesa más para usted?', presL:'Ajustarme al presupuesto', presR:'Cumplir la especificación técnica y la calidad',
   pres:['Mucho más el presupuesto','Más el presupuesto','Ambos por igual','Más la especificación','Mucho más la especificación'],
   qNps:'¿Qué tan probable es que nos recomiende a un colega o amigo?', npsL:'0 · Nada probable', npsR:'10 · Muy probable',
@@ -230,7 +230,7 @@ var T = {
   qRefalla:'Did the equipment fail again for the same reason?', refalla:[['si','Yes'],['no','No'],['nose','Not sure yet']],
   qCsat:'Overall, how satisfied are you with our service? (1 star is very dissatisfied and 5 is very satisfied)',
   qComA:'Any comments on these aspects?',
-  qImp:'Of the aspects you rated, choose the three that matter most to you:', imp:['Most important','Second most important','Third most important'], selec:'Select…',
+  qImp:'Of the aspects you rated, choose the three that matter most to you:', hImp:'Tap 3 in order of importance: the first one you tap becomes no. 1. To change the order, tap a chosen one to remove it.', imp:['Most important','Second most important','Third most important'], selec:'Select…',
   qPres:'When you buy, what matters more to you?', presL:'Staying within budget', presR:'Meeting the technical specification and quality',
   pres:['Budget, by far','Budget, somewhat more','Both equally','Specification, somewhat more','Specification, by far'],
   qNps:'How likely are you to recommend us to a colleague or friend?', npsL:'0 · Not at all likely', npsR:'10 · Extremely likely',
@@ -412,11 +412,7 @@ var COMPETIDORES = {
         q('com_attr', t('qComA'), area('com_attr', R.com_attr)) + nav();
     } else if (P === 'importancia'){
       h = sec(3, 's3') +
-        q('imp', t('qImp'), [0,1,2].map(function(i){
-          var sel = (R.imp || [])[i] || '';
-          return '<div class="sub"><label style="font-size:13px;color:var(--mute)">' + t('imp')[i] + '</label><select name="imp_' + i + '"><option value="">' + t('selec') + '</option>' +
-            t('attr').map(function(a, k){ return '<option value="' + k + '"' + (String(sel) === String(k) ? ' selected' : '') + '>' + esc(a) + '</option>'; }).join('') + '</select></div>';
-        }).join('')) +
+        q('imp', t('qImp'), '<div id="impWrap">' + rankBox('imp', impItems()) + '</div>', {help: t('hImp')}) +
         q('pres', t('qPres'), '<div class="scale-key"><span>' + t('presL') + '</span><span>' + t('presR') + '</span></div>' + radios('pres', t('pres').map(function(x, i){ return [String(i + 1), (i + 1) + ' · ' + esc(x)]; }), R.pres)) + nav();
     } else if (P === 'lealtad'){
       var mk = marcaObj() ? marcaObj().id : 'BOMOHSA';
@@ -426,7 +422,7 @@ var COMPETIDORES = {
       h = sec(4, 's4') +
         q('nps', t('qNps'), nps(R.nps), {req:true}) +
         q('nps_porque', t('qPorq'), area('nps_porque', R.nps_porque)) +
-        q('comp', t('qComp').replace('{m}', marcaN()), '<div id="compWrap">' + rankBox(items) + '</div><div class="sub"' + ((R.comp || []).indexOf('__otro') >= 0 ? '' : ' hidden') + ' id="compOtroBox">' + text('comp_otro', R.comp_otro, t('compOtroE')) + '</div>', {help: t('hComp')}) +
+        q('comp', t('qComp').replace('{m}', marcaN()), '<div id="compWrap">' + rankBox('comp', items) + '</div><div class="sub"' + ((R.comp || []).indexOf('__otro') >= 0 ? '' : ' hidden') + ' id="compOtroBox">' + text('comp_otro', R.comp_otro, t('compOtroE')) + '</div>', {help: t('hComp')}) +
         '<div id="vsWrap">' + vsBox(items) + '</div>' +
         q('share', t('qShare'), radios('share', t('share'), R.share, true)) + nav();
     } else if (P === 'portafolio'){
@@ -454,15 +450,20 @@ var COMPETIDORES = {
     var mk = marcaObj() ? marcaObj().id : 'BOMOHSA', lista = COMPETIDORES[mk] || [];
     return (st.ordenComp[mk] || []).map(function(i){ return [lista[i], lista[i]]; }).concat(t('compComun')).concat([['__otro', t('compOtro')]]);
   }
-  function rankBox(items){
-    var sel = (R.comp || []).slice(0, 3), lleno = sel.length >= 3;
+  function impItems(){
+    var a = t('attr'), cal = (R.attr || []).map(function(v, k){ return v && v !== 'NA' ? k : -1; }).filter(function(k){ return k >= 0; });
+    var ks = cal.length >= 3 ? cal : a.map(function(_, k){ return k; });
+    return ks.map(function(k){ return [String(k), a[k]]; });
+  }
+  function rankBox(f, items){
+    var sel = (R[f] || []).filter(function(v){ return v !== '' && v != null; }).map(String).slice(0, 3), lleno = sel.length >= 3;
     var elegidos = sel.map(function(v){ return items.filter(function(x){ return x[0] === v; })[0]; }).filter(Boolean);
     var resto = items.filter(function(x){ return sel.indexOf(x[0]) < 0; });
     function it(x, n){
-      return '<button type="button" class="opt rk' + (n ? ' on' : (lleno ? ' off' : '')) + '" data-rk="' + esc(x[0]) + '"><span class="num">' + (n || '') + '</span><span class="tx"><b>' + esc(x[1]) + '</b></span></button>';
+      return '<button type="button" class="opt rk' + (n ? ' on' : (lleno ? ' off' : '')) + '" data-rkf="' + f + '" data-rk="' + esc(x[0]) + '"><span class="num">' + (n || '') + '</span><span class="tx"><b>' + esc(x[1]) + '</b></span></button>';
     }
     return '<div class="opts">' + elegidos.map(function(x, i){ return it(x, i + 1); }).join('') +
-      (elegidos.length && resto.length ? '<div class="rk-sep">' + (st.lang === 'en' ? 'Other options' : 'Otras opciones') + '</div>' : '') +
+      (elegidos.length && resto.length ? '<div class="rk-sep">' + (st.lang === 'en' ? (f === 'imp' ? 'Other aspects' : 'Other options') : (f === 'imp' ? 'Otros aspectos' : 'Otras opciones')) + '</div>' : '') +
       resto.map(function(x){ return it(x, 0); }).join('') + '</div>';
   }
   function compNombre(items){
@@ -488,11 +489,18 @@ var COMPETIDORES = {
     R.comp = sel; if (sel[0] !== prim) delete R.vs;
     save(); limpiar($('compWrap'));
     var items = compItems();
-    $('compWrap').innerHTML = rankBox(items);
+    $('compWrap').innerHTML = rankBox('comp', items);
     $('compOtroBox').hidden = sel.indexOf('__otro') < 0;
     $('vsWrap').innerHTML = vsBox(items);
   }
-  app.addEventListener('click', function(e){ var b = e.target.closest('[data-rk]'); if (b) clickRank(b.getAttribute('data-rk')); });
+  function clickImp(v){
+    var sel = (R.imp || []).filter(function(x){ return x !== '' && x != null; }).map(String), k = sel.indexOf(v);
+    if (k >= 0) sel.splice(k, 1);
+    else { if (sel.length >= 3){ marcar('imp', t('compMax')); return; } sel.push(v); }
+    R.imp = sel; save(); limpiar($('impWrap'));
+    $('impWrap').innerHTML = rankBox('imp', impItems());
+  }
+  app.addEventListener('click', function(e){ var b = e.target.closest('[data-rk]'); if (!b) return; if (b.getAttribute('data-rkf') === 'imp') clickImp(b.getAttribute('data-rk')); else clickRank(b.getAttribute('data-rk')); });
 
   function nav(){ return '<div class="nav"><button class="btn sec" id="btnPrev">' + t('back') + '</button><button class="btn" id="btnNext">' + t('next') + '</button></div>'; }
   function stars(v){
@@ -523,7 +531,6 @@ var COMPETIDORES = {
     var el = e.target, n = el.name; if (!n) return;
     var m;
     if ((m = n.match(/^(attr|tec)_(\d+)$/))){ R[m[1]] = R[m[1]] || []; R[m[1]][+m[2]] = el.value; var row = el.closest('.row'); if (row) row.classList.remove('miss'); }
-    else if ((m = n.match(/^imp_(\d)$/))){ R.imp = R.imp || []; R.imp[+m[1]] = el.value; }
     else if (el.type === 'checkbox'){
       R[n] = [].slice.call(app.querySelectorAll('input[name="' + n + '"]:checked')).map(function(x){ return x.value; });
       el.closest('.opt').classList.toggle('on', el.checked);
