@@ -50,6 +50,11 @@ p{margin:10px 0}
 .opt.on{border-color:var(--acc);background:var(--soft)}
 .opt .tx b{color:var(--ink)}
 .opt .tx small{display:block;color:var(--mute);font-size:13px;margin-top:2px}
+.rk{width:100%;text-align:left;font:inherit;align-items:center}
+.rk .num{flex:none;width:28px;height:28px;border-radius:50%;border:2px solid var(--line2);display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:14px;color:var(--mute);background:#fff}
+.rk.on .num{background:var(--acc);border-color:var(--acc);color:#fff}
+.rk.off{opacity:.45}
+.rk-sep{font-size:12px;color:var(--mute);letter-spacing:.08em;text-transform:uppercase;margin:6px 0 0}
 .flag{font-size:22px;line-height:1}
 input.txt,select,textarea{font:inherit;font-size:16px;padding:11px 12px;border:1px solid var(--line2);border-radius:3px;background:var(--card);color:var(--ink);width:100%}
 textarea{min-height:88px;resize:vertical}
@@ -130,7 +135,7 @@ var CONFIG = {
   endpoint: 'https://script.google.com/macros/s/AKfycbxpeFVE2nxjyMgWYYNr7kfcPL9ViFyWPQXcOi9-8lVGvbGlzogPKW6cxK5MvnT8Amyk/exec',
   encuesta: 'SATISFACCION',
   cliente: 'GRUPO BOMOHSA',
-  version: '1.0'
+  version: '1.2'
   // Parámetros por URL:
   //   ?v=COD        código del vendedor que envía el enlace (WhatsApp). El correo oficial en BCC usa ?v=email
   //   ?pais=HN|NI|BZ   fija el país;  &marca=BOMOHSA|AGROIN  fija la marca en Honduras
@@ -172,7 +177,8 @@ var T = {
   pres:['Mucho más el presupuesto','Más el presupuesto','Ambos por igual','Más la especificación','Mucho más la especificación'],
   qNps:'¿Qué tan probable es que nos recomiende a un colega o amigo?', npsL:'0 · Nada probable', npsR:'10 · Muy probable',
   qPorq:'¿Por qué nos dio esa calificación?',
-  qComp:'Si no pudiera comprarnos, ¿a quién le compraría? (puede marcar varias)', compOtro:'Otro', compOtroE:'¿Cuál?',
+  qComp:'Si no encuentra en {m} el producto o servicio que necesita, ¿a quién se lo compraría?', hComp:'Elija hasta 3 opciones en orden de importancia: la primera que toque será la n.º 1. Para cambiar el orden, toque una opción elegida y se quita.', compMax:'Ya eligió 3. Quite una para elegir otra.',
+  qVs:'Comparado con {c}, ¿cómo es comprarle a {m}?', vs:[['5','Mucho mejor con {m}'],['4','Algo mejor con {m}'],['3','Igual'],['2','Algo peor con {m}'],['1','Mucho peor con {m}'],['nc','No le he comprado a {c}']], compOtro:'Otro', compOtroE:'¿Cuál?',
   compComun:[['taller','Taller o técnico independiente'],['import','Importación directa o compra en línea'],['nose','No sé']],
   qShare:'De lo que su empresa (o usted) compra en estos productos y servicios, ¿qué parte nos compra a nosotros?',
   share:[['100','Todo'],['75','Más del 75 %'],['50','Entre 50 y 75 %'],['25','Entre 25 y 50 %'],['0','Menos del 25 %'],['nose','No sé']],
@@ -229,7 +235,8 @@ var T = {
   pres:['Budget, by far','Budget, somewhat more','Both equally','Specification, somewhat more','Specification, by far'],
   qNps:'How likely are you to recommend us to a colleague or friend?', npsL:'0 · Not at all likely', npsR:'10 · Extremely likely',
   qPorq:'Why did you give us that score?',
-  qComp:'If you could not buy from us, who would you buy from? (check all that apply)', compOtro:'Other', compOtroE:'Which one?',
+  qComp:'If you cannot find the product or service you need at {m}, who would you buy it from?', hComp:'Choose up to 3 options in order of importance: the first one you tap becomes no. 1. To change the order, tap a chosen option to remove it.', compMax:'You already chose 3. Remove one to choose another.',
+  qVs:'Compared with {c}, how is buying from {m}?', vs:[['5','Much better with {m}'],['4','Somewhat better with {m}'],['3','The same'],['2','Somewhat worse with {m}'],['1','Much worse with {m}'],['nc','I have not bought from {c}']], compOtro:'Other', compOtroE:'Which one?',
   compComun:[['taller','Independent workshop or technician'],['import','Direct import or online purchase'],['nose','Not sure']],
   qShare:'Of what your company (or you) buys in these products and services, what share do you buy from us?',
   share:[['100','All of it'],['75','More than 75 %'],['50','50 to 75 %'],['25','25 to 50 %'],['0','Less than 25 %'],['nose','Not sure']],
@@ -281,13 +288,16 @@ var COMPETIDORES = {
 (function(){
   var QS = new URLSearchParams(location.search);
   var DEMO = !/^https?:\/\//.test(CONFIG.endpoint);
-  var STORE_KEY = 'erea_satis_bomohsa_v1';
+  var STORE_KEY = 'erea_satis_bomohsa_v12';
   var QUEUE_KEY = 'erea_satis_bomohsa_cola';
   var app = document.getElementById('app');
   var st = load() || {r:{}, step:0, id:uid(), inicio:null, lang:null};
   st.r = st.r || {};
   if (QS.get('v')) st.vendedor = QS.get('v').trim().slice(0, 40);
-  if (QS.get('pais') && PAISES[QS.get('pais').toUpperCase()]) st.r.pais = QS.get('pais').toUpperCase();
+  // Encuesta por país: /hn/, /ni/, /bz/ (o ?pais=) fijan el país y ocultan el selector
+  var FIJO = QS.get('pais') && PAISES[QS.get('pais').toUpperCase()] ? QS.get('pais').toUpperCase() : '';
+  if (FIJO && st.r.pais && st.r.pais !== FIJO){ var vend = st.vendedor; st = {r:{}, step:0, id:uid(), inicio:null, lang:null}; if (vend) st.vendedor = vend; }
+  if (FIJO) st.r.pais = FIJO;
   if (QS.get('marca')) st.r.marca = QS.get('marca').toUpperCase();
   if (QS.get('lang') === 'en' || QS.get('lang') === 'es') st.lang = QS.get('lang');
   if (!st.lang) st.lang = st.r.pais ? PAISES[st.r.pais].lang : 'es';
@@ -377,7 +387,7 @@ var COMPETIDORES = {
     if (P === 'portada'){
       var p = pais();
       h = '<div class="eyebrow">' + t('eyebrow0') + '</div><h1>' + t('h0') + '</h1><p class="lead">' + t('lead0') + '</p><div class="box">' + t('conf0') + '</div>' +
-        q('pais', t('qPais'), radios('pais', Object.keys(PAISES).map(function(k){ return [k, '<span class="flag">' + PAISES[k].flag + '</span> <b>' + PAISES[k][L] + '</b>']; }), R.pais), {req:true}) +
+        q('pais', t('qPais'), radios('pais', Object.keys(PAISES).map(function(k){ return [k, '<span class="flag">' + PAISES[k].flag + '</span> <b>' + PAISES[k][L] + '</b>']; }), R.pais), {req:true, hidden: !!FIJO}) +
         q('marca', t('qMarca'), p && p.marcas.length > 1 ? radios('marca', p.marcas.map(function(m){ return [m.id, '<b>' + esc(m.n) + '</b>', m.d[L]]; }), R.marca) : '', {req:true, hidden: !(p && p.marcas.length > 1)}) +
         '<div class="box err" id="pendingBox" hidden></div>' +
         '<div class="nav"><span></span><button class="btn" id="btnNext">' + t('start') + '</button></div>';
@@ -416,7 +426,8 @@ var COMPETIDORES = {
       h = sec(4, 's4') +
         q('nps', t('qNps'), nps(R.nps), {req:true}) +
         q('nps_porque', t('qPorq'), area('nps_porque', R.nps_porque)) +
-        q('comp', t('qComp'), checks('comp', items, R.comp) + '<div class="sub"' + ((R.comp || []).indexOf('__otro') >= 0 ? '' : ' hidden') + ' id="compOtroBox">' + text('comp_otro', R.comp_otro, t('compOtroE')) + '</div>') +
+        q('comp', t('qComp').replace('{m}', marcaN()), '<div id="compWrap">' + rankBox(items) + '</div><div class="sub"' + ((R.comp || []).indexOf('__otro') >= 0 ? '' : ' hidden') + ' id="compOtroBox">' + text('comp_otro', R.comp_otro, t('compOtroE')) + '</div>', {help: t('hComp')}) +
+        '<div id="vsWrap">' + vsBox(items) + '</div>' +
         q('share', t('qShare'), radios('share', t('share'), R.share, true)) + nav();
     } else if (P === 'portafolio'){
       h = sec(5, 's5') +
@@ -438,6 +449,51 @@ var COMPETIDORES = {
     bind();
     if (P === 'portada' && queue().length){ $('pendingBox').innerHTML = t('pend'); $('pendingBox').hidden = false; flushQueue(); }
   }
+  /* ---------- P13a: ranking por orden de clic (máx. 3) ---------- */
+  function compItems(){
+    var mk = marcaObj() ? marcaObj().id : 'BOMOHSA', lista = COMPETIDORES[mk] || [];
+    return (st.ordenComp[mk] || []).map(function(i){ return [lista[i], lista[i]]; }).concat(t('compComun')).concat([['__otro', t('compOtro')]]);
+  }
+  function rankBox(items){
+    var sel = (R.comp || []).slice(0, 3), lleno = sel.length >= 3;
+    var elegidos = sel.map(function(v){ return items.filter(function(x){ return x[0] === v; })[0]; }).filter(Boolean);
+    var resto = items.filter(function(x){ return sel.indexOf(x[0]) < 0; });
+    function it(x, n){
+      return '<button type="button" class="opt rk' + (n ? ' on' : (lleno ? ' off' : '')) + '" data-rk="' + esc(x[0]) + '"><span class="num">' + (n || '') + '</span><span class="tx"><b>' + esc(x[1]) + '</b></span></button>';
+    }
+    return '<div class="opts">' + elegidos.map(function(x, i){ return it(x, i + 1); }).join('') +
+      (elegidos.length && resto.length ? '<div class="rk-sep">' + (st.lang === 'en' ? 'Other options' : 'Otras opciones') + '</div>' : '') +
+      resto.map(function(x){ return it(x, 0); }).join('') + '</div>';
+  }
+  function compNombre(items){
+    var v = (R.comp || [])[0]; if (!v || v === 'nose') return '';
+    if (v === '__otro') return (R.comp_otro || '').trim() || (st.lang === 'en' ? 'that option' : 'esa opción');
+    var x = items.filter(function(y){ return y[0] === v; })[0]; return x ? x[1] : v;
+  }
+  function vsBox(items){
+    var c = compNombre(items); if (!c) return '';
+    var m = marcaN();
+    return q('vs', t('qVs').replace('{c}', c).replace('{m}', m), radios('vs', t('vs').map(function(x){ return [x[0], esc(x[1].replace('{m}', m).replace('{c}', c))]; }), R.vs));
+  }
+  function clickRank(v){
+    var sel = (R.comp || []).slice(), k = sel.indexOf(v);
+    if (k >= 0) sel.splice(k, 1);
+    else if (v === 'nose') sel = ['nose'];
+    else {
+      sel = sel.filter(function(x){ return x !== 'nose'; });
+      if (sel.length >= 3){ marcar('comp', t('compMax')); return; }
+      sel.push(v);
+    }
+    var prim = (R.comp || [])[0];
+    R.comp = sel; if (sel[0] !== prim) delete R.vs;
+    save(); limpiar($('compWrap'));
+    var items = compItems();
+    $('compWrap').innerHTML = rankBox(items);
+    $('compOtroBox').hidden = sel.indexOf('__otro') < 0;
+    $('vsWrap').innerHTML = vsBox(items);
+  }
+  app.addEventListener('click', function(e){ var b = e.target.closest('[data-rk]'); if (b) clickRank(b.getAttribute('data-rk')); });
+
   function nav(){ return '<div class="nav"><button class="btn sec" id="btnPrev">' + t('back') + '</button><button class="btn" id="btnNext">' + t('next') + '</button></div>'; }
   function stars(v){
     return '<div class="stars" role="radiogroup">' + [1,2,3,4,5].map(function(n){
@@ -461,6 +517,7 @@ var COMPETIDORES = {
   function onInput(e){
     var n = e.target.name; if (!n || e.target.type === 'radio' || e.target.type === 'checkbox' || e.target.tagName === 'SELECT') return;
     R[n] = e.target.value; save(); limpiar(e.target);
+    if (n === 'comp_otro' && (R.comp || [])[0] === '__otro'){ var lb = app.querySelector('[data-q="vs"]'); if (lb) $('vsWrap').innerHTML = vsBox(compItems()); }
   }
   function onChange(e){
     var el = e.target, n = el.name; if (!n) return;
@@ -482,7 +539,6 @@ var COMPETIDORES = {
     if (n === 'compra' && PASOS[st.step] === 'datos') { /* sin efecto visible en esta pantalla */ }
     if (n === 'csat') app.querySelectorAll('.stars span').forEach(function(s, i){ s.classList.toggle('lit', i < +R.csat); });
     if (n === 'sucursal') $('sucOtraBox').hidden = R.sucursal !== '__otra';
-    if (n === 'comp') $('compOtroBox').hidden = (R.comp || []).indexOf('__otro') < 0;
     if (n === 'contacto') $('contBox').hidden = R.contacto !== 'si';
   }
   function limpiar(el){ var b = el.closest('.q'); if (b){ b.classList.remove('bad'); b.querySelector('.hint').textContent = ''; } }
@@ -530,6 +586,7 @@ var COMPETIDORES = {
     else if (r.donde === 'taller' && r.tec) r.tec = r.tec.slice(0, 6);
     if (r.sucursal !== '__otra') delete r.sucursal_otra;
     if ((r.comp || []).indexOf('__otro') < 0) delete r.comp_otro;
+    if (!r.comp || !r.comp[0] || r.comp[0] === 'nose') delete r.vs;
     if (r.contacto !== 'si'){ delete r.telefono; delete r.correo; }
     return r;
   }
