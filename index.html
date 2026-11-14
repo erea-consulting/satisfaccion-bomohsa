@@ -417,7 +417,7 @@ var COMPETIDORES = {
     } else if (P === 'lealtad'){
       var mk = marcaObj() ? marcaObj().id : 'BOMOHSA';
       var lista = COMPETIDORES[mk] || [];
-      if (!st.ordenComp[mk]){ st.ordenComp[mk] = lista.map(function(_, i){ return i; }).sort(function(){ return Math.random() - .5; }); save(); }
+      if (!st.ordenComp[mk] || st.ordenComp[mk].length !== lista.length){ st.ordenComp[mk] = lista.map(function(_, i){ return i; }).sort(function(){ return Math.random() - .5; }); save(); }
       var items = st.ordenComp[mk].map(function(i){ return [lista[i], lista[i]]; }).concat(t('compComun')).concat([['__otro', t('compOtro')]]);
       h = sec(4, 's4') +
         q('nps', t('qNps'), nps(R.nps), {req:true}) +
